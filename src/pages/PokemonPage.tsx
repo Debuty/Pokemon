@@ -15,6 +15,7 @@ const PokemonPage = () => {
       const url = `https://pokeapi.co/api/v2/pokemon?offset=${
         (page - 1) * 10
       }&limit=10`;
+      
       const response = await axios.get(url);
 
       return response.data;
@@ -22,6 +23,10 @@ const PokemonPage = () => {
   });
   const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   if (isLoading)
