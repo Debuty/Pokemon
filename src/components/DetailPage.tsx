@@ -11,7 +11,7 @@ import type { StatDetail, AbilityMain } from "../types/pokemon.types";
 export const DetailPage = () => {
   const num = useParams();
 
-  const { data, isLoading, isError } = useQuery({
+  const { data } = useQuery({
     queryKey: ["DetailPage"],
     queryFn: async () => {
       const response = await axios.get(
@@ -80,7 +80,10 @@ export const DetailPage = () => {
                 return (
                   <StatesLinear
                     value={stat.base_stat}
-                    name={stat.stat.name.charAt(0).toUpperCase() + stat.stat.name.slice(1)}
+                    name={
+                      stat.stat.name.charAt(0).toUpperCase() +
+                      stat.stat.name.slice(1)
+                    }
                     key={index}
                   />
                 );
