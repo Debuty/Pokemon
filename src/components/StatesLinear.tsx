@@ -20,9 +20,9 @@ export const StatesLinear = ({ value, name }: StatesLinearProps) => {
           height: "10px",
           width: "80% ",
           borderRadius: "5px",
-          backgroundColor: "#e0e0e0", // رمادي فاتح (لون الخط الفاضي)
+          backgroundColor: "#e0e0e0", 
           "& .MuiLinearProgress-bar": {
-            backgroundColor: "#000000", // أسود (لون الخط المملوء)
+            backgroundColor: "#000000", 
           },
         }}
       />

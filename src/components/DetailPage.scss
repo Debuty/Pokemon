@@ -18,7 +18,7 @@
   row-gap: 4rem;
   box-shadow: 0px 0px 3px black;
   padding: 0 0 5rem 0rem;
-
+  background-color: white;
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     width: 95%;

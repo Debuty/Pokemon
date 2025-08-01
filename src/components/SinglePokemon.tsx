@@ -7,11 +7,21 @@ export const SinglePokemon = ({ name, isLoading, url }: SinglePokemonProps) => {
   const match = url.match(/\/pokemon\/(\d+)\//);
   const number = match ? parseInt(match[1], 10) : 0;
   
+if(isLoading){
+  return <Skeleton variant="rectangular" width={210} height={118} />
+}
+
   return (
     <Link to={`/Pokemon/${number}`} style={{ display: "contents" }}>
       <Grid
         key={name}
         size={{ xs: 12, md: 6, lg: 4, xl: 3 }}
+        sx={{
+          backgroundColor:"white",
+          boxShadow:"0px 0px 1px black",
+          borderRadius:"1rem",
+          width:"28rem"
+        }}
       >
         <Box
           sx={{
