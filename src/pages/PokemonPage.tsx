@@ -7,8 +7,11 @@ import type { PokemonResponse } from "../types/pokemon.types";
 import { useState } from "react";
 
 const PokemonPage = () => {
+
+
   const [page, setPage] = useState<number>(1);
 
+ 
   const { data, isLoading, isError } = useQuery<PokemonResponse>({
     queryKey: ["pokemon", page],
     queryFn: async () => {

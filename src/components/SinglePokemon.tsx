@@ -7,9 +7,7 @@ export const SinglePokemon = ({ name, isLoading, url }: SinglePokemonProps) => {
   const match = url.match(/\/pokemon\/(\d+)\//);
   const number = match ? parseInt(match[1], 10) : 0;
   
-if(isLoading){
-  return <Skeleton variant="rectangular" width={210} height={118} />
-}
+
 
   return (
     <Link to={`/Pokemon/${number}`} style={{ display: "contents" }}>
@@ -42,14 +40,15 @@ if(isLoading){
               padding:"4rem",
               borderRadius:"1rem"
             }}>
-            <img
-              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${number}.png`}
+            <img 
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/${number}.gif`}
               alt={name}
               style={{ width: "100%" }}
             />
             </div>
           )}
-          <Typography variant="h3" sx={{ mt: 2 }} color="black">
+          {/* https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${number}.png */}
+          <Typography variant="h3" sx={{ mt: 2 ,fontSize:"2.5rem" }} color="black">
             {name}
           </Typography>
           <Typography variant="h4" color="text.secondary">
