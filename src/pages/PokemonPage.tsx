@@ -52,7 +52,9 @@ const PokemonPage = () => {
       }}
     >
       <Header />
-      <Grid container spacing={8}>
+      <Grid container spacing={8} sx={{
+        justifyContent:"center"
+      }}>
         {data?.results.map((pokemon) => (
           <SinglePokemon
             name={pokemon.name}
