@@ -23,6 +23,7 @@ const PokemonPage = () => {
 
       return response.data;
     },
+   
   });
   const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
