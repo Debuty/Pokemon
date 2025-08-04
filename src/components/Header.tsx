@@ -2,6 +2,7 @@ import { Stack } from "@mui/material";
 import { Typography } from "@mui/material";
 import { Button } from "@mui/material";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
+import { Link } from 'react-router-dom';
 export const Header = () => {
   return (
     <Stack spacing={2} direction={"column"} alignItems={"center"}>
@@ -13,6 +14,7 @@ export const Header = () => {
         Discover and explore pokemon with pge control
       </Typography>
       <Stack direction={"row"} spacing={2}>
+       <Link to={"/Pokemon"}>
         <Button
           variant="contained"
           sx={{
@@ -23,6 +25,8 @@ export const Header = () => {
         >
           page control
         </Button>
+        </Link>
+        <Link to={"/InfiniteQuery"}>
         <Button
           variant="contained"
           sx={{
@@ -34,6 +38,7 @@ export const Header = () => {
         >
           infinite scroll
         </Button>
+        </Link>
       </Stack>
     </Stack>
   );

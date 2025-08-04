@@ -1,28 +1,31 @@
-import { Link, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useParams } from "react-router-dom";
+
 import { useQuery } from "@tanstack/react-query";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 import axios from "axios";
 
 import "./DetailPage.scss";
-import { Avatar, Button, CircularProgress } from "@mui/material";
-import { StatesLinear } from "./StatesLinear";
-import type { StatDetail, AbilityMain } from "../types/pokemon.types";
+import { CircularProgress } from "@mui/material";
+
 import { PokemonError } from "./PokemonError";
+import { BackButton } from "./BackButton";
+import { PokemonHeader } from "./PokemonHeader";
+import { PokemonAvHeWe } from "./PokemonAvHeWe";
+import { PokemonStats } from "./PokemonStats";
+import { PokemonAbilities } from "./PokemonAbilities";
+import { PokemonExprience } from "./PokemonExprience";
 
 export const DetailPage = () => {
-  const num = useParams();
-  const [imageLoading, setImageLoading] = useState(true);
+  const { id, type } = useParams();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["DetailPage"],
     queryFn: async () => {
       const response = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${num.id}/`
+        `https://pokeapi.co/api/v2/pokemon/${id}/`
       );
       return response.data;
     },
-   
   });
 
   if (isLoading) {
@@ -47,112 +50,14 @@ export const DetailPage = () => {
   return (
     <>
       <div className="container">
-        <Link to={"/Pokemon"} style={{ display: "contents" }}>
-          {" "}
-          <Button
-            variant="contained"
-            sx={{
-              fontSize: "2rem",
-              fontWeight: "bolder",
-              bgcolor: "white",
-              color: "black",
-              m: "2rem",
-              alignSelf: "self-start",
-            }}
-            startIcon={<ArrowBackIcon />}
-          >
-            Back To List
-          </Button>{" "}
-        </Link>
+        <BackButton />
         {!isError ? (
           <div className="card">
-            <div className="card__header">
-              <h2 className="pokemon-name">{name}</h2>
-              <span className="pokemon-id">#00{num.id}</span>
-            </div>
-            <div className="card__avatar-height-weight">
-              <div
-                className="card__avatar"
-                style={{
-                  position: "relative",
-                  width: "300px",
-                  height: "300px",
-                }}
-              >
-                <Avatar
-                  sx={{
-                    width: "100%",
-                    height: "100%",
-                  }}
-                  alt="pokemon"
-                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${num.id}.png`}
-                  onLoad={() => setImageLoading(false)}
-                />
-                {imageLoading && (
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      backgroundColor: "rgba(255, 255, 255, 0.8)",
-                      zIndex: 100,
-                    }}
-                  >
-                    <CircularProgress size={60} />
-                  </div>
-                )}
-              </div>
-              <div className="card__height-weight">
-                <div className="card__height">
-                  <span>Height</span>
-                  <span>{height / 10} M</span>
-                </div>
-                <div className="card__weight">
-                  <span>weight</span>
-                  <span>{weight / 10} Kg</span>
-                </div>
-              </div>
-            </div>
-            <div className="card__stats">
-              <div className="title">Base Stats</div>
-              <div className="card__stats__Liens">
-                {stats.map((stat: StatDetail, index: number) => {
-                  return (
-                    <StatesLinear
-                      value={stat.base_stat}
-                      name={
-                        stat.stat.name.charAt(0).toUpperCase() +
-                        stat.stat.name.slice(1)
-                      }
-                      key={index}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-            <div className="card__abilities">
-              <div className="title">Abilitie</div>
-              <div className="abilities-container">
-                {abilities.map((ability: AbilityMain, index: number) => {
-                  return (
-                    <span className="card__abilities__abilitie" key={index}>
-                      {ability.ability.name}
-                    </span>
-                  );
-                })}
-              </div>
-            </div>
-            <div className="card__base-exprience">
-              <div className="title">Base Experience</div>
-              <div className="card__base-exprience__Num">
-                {base_experience} XP
-              </div>
-            </div>
+            <PokemonHeader name={name} id={id} />
+            <PokemonAvHeWe height={height} weight={weight} id={id} />
+            <PokemonStats stats={stats} />
+            <PokemonAbilities abilities={abilities} />
+            <PokemonExprience base_experience={base_experience} />
           </div>
         ) : (
           <PokemonError />
