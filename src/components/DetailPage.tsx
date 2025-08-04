@@ -16,7 +16,7 @@ import { PokemonAbilities } from "./PokemonAbilities";
 import { PokemonExprience } from "./PokemonExprience";
 
 export const DetailPage = () => {
-  const { id, type } = useParams();
+  const { id } = useParams();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["DetailPage"],
