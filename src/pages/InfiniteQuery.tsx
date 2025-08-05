@@ -18,6 +18,7 @@ interface PokemonResponse {
 }
 
 const fetchPokemons = async ({ pageParam = 0 }): Promise<PokemonResponse> => {
+  
   const offset = pageParam * 10;
   const response = await axios.get<PokemonResponse>(
     `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=10`
@@ -60,26 +61,23 @@ export const InfiniteQuery = () => {
       <Header />
       {isLoading && <p>Loading...</p>}
       {isError && <p>Error fetching data</p>}
-
-      {data?.pages.map((page, i) => (
-        <Grid
-          key={i}
+      <Grid
           container
           spacing={8}
           sx={{
             justifyContent: "center",
           }}
-        >
-          {page.results.map((pokemon: Pokemon) => (
-            <SinglePokemon
-              name={pokemon.name}
-              isLoading={isLoading}
-              key={pokemon.name}
-              url={pokemon.url}
-            />
-          ))}
+        >{data?.pages.flatMap(page=>page.results.map(pokemon=> <SinglePokemon
+          name={pokemon.name}
+          isLoading={isLoading}
+          key={pokemon.name}
+          url={pokemon.url}
+        />))}
+       
+           
+          
+    
         </Grid>
-      ))}
 
       <Button
         onClick={() => fetchNextPage()}

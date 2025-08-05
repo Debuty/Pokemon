@@ -8,11 +8,11 @@ export const SinglePokemon = ({ name, isLoading, url }: SinglePokemonProps) => {
   const number = match ? parseInt(match[1], 10) : 0;
   
 
-  const Typeof_pag = window.location.pathname.split("/")[1]
+ 
 
 
   return (
-    <Link to={`/${Typeof_pag}/${number}`} style={{ display: "contents" }}>
+    <Link to={`/Pokemon/${number}`} style={{ display: "contents" }}>
       <Grid
         key={name}
         size={{ xs: 12, md: 6, lg: 4, xl: 3 }}

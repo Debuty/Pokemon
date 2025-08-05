@@ -4,9 +4,12 @@ import { Link} from 'react-router-dom'
 
 export const BackButton = () => {
   
-  const Typeof_pag = window.location.pathname.split("/")[1]
+
+
+
+
   return (
-    <Link to={`/${Typeof_pag}`} style={{ display: "contents" }}>
+    <Link to={'/Pokemon'} style={{ display: "contents" }}>
     {" "}
     <Button
       variant="contained"

@@ -1,43 +1,116 @@
-import{useForm} from 'react-hook-form'
+import {  FormProvider, useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
+import { Button,  TextField } from "@mui/material";
+import {z} from "zod"
+import{zodResolver}from "@hookform/resolvers/zod" 
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "./UserNameSlice";
+import { store } from "./store";
+
 
 export const PokemonForm = () => {
+const Navigate = useNavigate()
 
-const Form = useForm()
-    const{register ,  control , handleSubmit , formState} = Form
-  
-const {errors} = formState
+const dispatch = useDispatch()
+const schema = z.object({
+  username: z.string().nonempty("User Name Is required").regex( /^[A-Z].*$/, "Invalid username format"),
+  email : z.email("Eamil Format is not vaild").nonempty("Email Name Is required")
+})
 
-console.log(errors.username)
+interface FormFields{
+  email:string,
+  username:string
+}
 
-  const onSubmit= (data)=>{
-console.log(data)
-  }
-  
-    return (    
-    <div style={{
-  display:"flex",
-  gap:"1rem"
+  const Form = useForm({
+    defaultValues: {
+      username: "",
+      email: "",
+    },
+     resolver:zodResolver(schema),
+    //  mode:'onChange'
+  });
+  const { register, control, handleSubmit, formState } = Form;
 
-    }}>
-      <form action="" onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="username" style={{
-            fontSize:"2rem"
-        }}>UserName</label>
-        <input type="text" id="username"  {...register("username",{
-          required:{
-           value:true,
-           message:"username req"
-          }
-        }) } />
-       <div> {errors.username}</div>
-        <label htmlFor="email" style={{
-            fontSize:"2rem"
-        }}>Email</label>
-        <input type="Email" id=" Email" {...register("Email")} />
-        <button >supmit</button>
-      </form>
-      <DevTool control={control}/>
-    </div>
+  const { errors  } = formState;
+
+
+
+  const onSubmit = (data: FormFields) => {
+        dispatch(addUser(data.username))
+        Navigate("/Pokemon")
+  };
+   
+  return (
+    <FormProvider {...Form}>
+      <div
+        style={{
+          display: "flex",
+          height: "100vh",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "1rem",
+        }}
+      >
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+            padding:"1rem"
+          }}
+        >
+          <TextField
+            variant="filled"
+            label="Username"
+            sx={{
+              "& .MuiInputBase-input": {
+             height:"3rem",
+             width:"23rem",
+             fontSize:"2rem"
+            },
+            "& .MuiFormLabel-root": {
+             fontSize:"2rem"
+             },
+            }}
+            {...register("username")}
+          />
+          <div style={{ fontSize: "2rem", color: "red" }}>
+            {" "}
+             {errors.username?.message?.toString()} 
+          </div>
+
+          <TextField
+            variant="filled"
+            label="Email"
+            sx={{
+              "& .MuiInputBase-input": {
+             height:"3rem",
+             width:"23rem",
+             fontSize:"2rem"
+            },
+            "& .MuiFormLabel-root": {
+              fontSize:"2rem"
+              },
+            }}
+            {...register("email")}
+          />
+          <div style={{ fontSize: "2rem", color: "red" }}>
+            {" "}
+             {errors.email?.message?.toString()}
+          </div>
+
+          <Button variant="contained" type="submit" 
+          sx={{
+            height:"5rem"
+          }}>
+            supmit
+          </Button>
+        </form>
+        <DevTool control={control} />
+      </div>
+    </FormProvider>
   );
 };

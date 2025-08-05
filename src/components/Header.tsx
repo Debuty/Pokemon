@@ -2,10 +2,41 @@ import { Stack } from "@mui/material";
 import { Typography } from "@mui/material";
 import { Button } from "@mui/material";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
-import { Link } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+import { removeUser } from "./UserNameSlice";
+import { setPaaginationMood } from "./PokemonsSlice";
+
+
 export const Header = () => {
+  const username = useSelector((state: RootState) => state.user.username)
+  
+const dispatch = useDispatch()
+const Navigate = useNavigate()
+const handelLogOut =  ()=>{
+   Navigate('/')
+  
+  dispatch(removeUser(""))
+  
+}
+
   return (
     <Stack spacing={2} direction={"column"} alignItems={"center"}>
+      <Stack spacing={2}>
+      <Typography variant="h3">Welcom {username}</Typography>
+      <Button
+          variant="contained"
+          sx={{
+            fontSize: "1.5rem",
+            backgroundColor: "black",
+            fontWeight: "700",
+          }}
+          onClick={handelLogOut}
+        >
+          LogOut
+        </Button>
+      </Stack>
       <Typography variant="h1">
         {" "}
         <WhatshotIcon sx={{ fontSize: "4rem" }} /> pokedox
@@ -14,7 +45,7 @@ export const Header = () => {
         Discover and explore pokemon with pge control
       </Typography>
       <Stack direction={"row"} spacing={2}>
-       <Link to={"/Pokemon"}>
+     
         <Button
           variant="contained"
           sx={{
@@ -22,11 +53,12 @@ export const Header = () => {
             backgroundColor: "black",
             fontWeight: "700",
           }}
+          onClick={()=>dispatch(setPaaginationMood("pages"))}
         >
           page control
         </Button>
-        </Link>
-        <Link to={"/InfiniteQuery"}>
+      
+       
         <Button
           variant="contained"
           sx={{
@@ -35,10 +67,11 @@ export const Header = () => {
             color: "black",
             fontWeight: "700",
           }}
+          onClick={()=>dispatch(setPaaginationMood("infinite"))}
         >
           infinite scroll
         </Button>
-        </Link>
+        
       </Stack>
     </Stack>
   );
