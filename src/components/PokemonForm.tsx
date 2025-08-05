@@ -6,7 +6,7 @@ import{zodResolver}from "@hookform/resolvers/zod"
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "./UserNameSlice";
-import { store } from "./store";
+
 
 
 export const PokemonForm = () => {
